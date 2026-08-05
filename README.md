@@ -9,37 +9,64 @@ tipografia com eyebrows monoespaçados, cartões com borda suave, blocos de esta
 
 Site bilingue: **34 páginas** (17 em português, 17 em inglês).
 
+## URLs sem `.html`
+
+Cada página é uma pasta com um `index.html` dentro. É isso que dá URLs limpos:
+
+```
+/contacto/                   →  contacto/index.html
+/servicos/cameras-cctv/      →  servicos/cameras-cctv/index.html
+/en/services/cctv-cameras/   →  en/services/cctv-cameras/index.html
+```
+
+Não é preciso configuração nenhuma no servidor. Funciona igual em Apache,
+Nginx, IIS, cPanel, GitHub Pages, Netlify, Vercel e Cloudflare Pages, porque
+todos servem o `index.html` de uma pasta por omissão. Não há `.htaccess`,
+`vercel.json` nem regras de *rewrite* — e por isso mudar de alojamento não
+quebra nada.
+
+O único efeito secundário: **abrir o `index.html` com duplo clique já não
+navega**, porque `file://` não resolve pastas para o seu `index.html`. Para ver
+localmente, sirva a pasta:
+
+```bash
+python -m http.server 8080
+# depois: http://localhost:8080
+```
+
+## Estrutura
+
 ```
 interdata-html/
-│                          ── PORTUGUÊS (raiz) ──
-├── index.html             Página inicial
-├── sobre.html             Sobre Nós (missão/visão/valores, números)
-├── servicos.html          Hub dos serviços + guia editorial de ~1100 palavras
-├── contacto.html          Contactos + formulário de cotação + FAQ
-├── servicos/              Uma página dedicada por serviço (13)
-│   ├── cabeamento-estruturado.html   ├── voz-pbx-voip.html
-│   ├── cameras-cctv.html             ├── assistencia-tecnica.html
-│   ├── alarmes-seguranca.html        ├── criacao-websites.html
-│   ├── controle-acesso.html          ├── redes-sociais.html
-│   ├── fibra-optica.html             ├── marketing-seo.html
-│   ├── telecomunicacoes.html         └── desenvolvimento-software.html
-│   └── iptv.html
-│                          ── INGLÊS ──
-├── en/
-│   ├── index.html         about.html · services.html · contact.html
-│   └── services/          13 páginas com slugs próprios em inglês
-│       structured-cabling · cctv-cameras · security-alarms · access-control
-│       fibre-optic · telecommunications · iptv · voice-pbx-voip
-│       technical-support · web-design · social-media · seo-marketing
-│       software-development
+│                                    ── PORTUGUÊS (raiz) ──
+├── index.html                       /            Página inicial
+├── sobre/index.html                 /sobre/      Missão, visão, valores, números
+├── servicos/index.html              /servicos/   Hub + guia editorial (~1100 palavras)
+├── contacto/index.html              /contacto/   Contactos, cotação e FAQ
+├── servicos/                        Uma pasta por serviço (13)
+│   ├── cabeamento-estruturado/      ├── voz-pbx-voip/
+│   ├── cameras-cctv/                ├── assistencia-tecnica/
+│   ├── alarmes-seguranca/           ├── criacao-websites/
+│   ├── controle-acesso/             ├── redes-sociais/
+│   ├── fibra-optica/                ├── marketing-seo/
+│   ├── telecomunicacoes/            └── desenvolvimento-software/
+│   └── iptv/
+│                                    ── INGLÊS ──
+├── en/index.html                    /en/
+├── en/about/  ·  en/services/  ·  en/contact/
+├── en/services/                     13 pastas com slugs próprios em inglês
+│   structured-cabling · cctv-cameras · security-alarms · access-control
+│   fibre-optic · telecommunications · iptv · voice-pbx-voip
+│   technical-support · web-design · social-media · seo-marketing
+│   software-development
 └── assets/
-    ├── css/style.css      Folha única, comentada por secções
-    ├── js/main.js         Vanilla JS, sem bibliotecas
+    ├── css/style.css                Folha única, comentada por secções
+    ├── js/main.js                   Vanilla JS, sem bibliotecas
     └── img/
-        ├── logo.png          Logótipo oficial (fundos claros)
-        ├── logo-branco.png   Variante para o rodapé escuro
-        ├── icone.png         Símbolo 180×180 (apple-touch-icon, Open Graph)
-        └── favicon-32.png    Favicon
+        ├── logo.png                 Logótipo oficial (fundos claros)
+        ├── logo-branco.png          Variante para o rodapé escuro
+        ├── icone.png                Símbolo 180×180 (apple-touch-icon, Open Graph)
+        └── favicon-32.png           Favicon
 ```
 
 Cada página de serviço tem: hero com breadcrumb, visão geral com benefícios,
@@ -62,15 +89,10 @@ as pessoas escrevem no Google: `structured-cabling`, não `cabeamento-estruturad
 Para acrescentar um terceiro idioma, o padrão é o mesmo: uma pasta com o código
 do idioma na raiz, e o selector passa a ter três entradas.
 
-## Como abrir
+## Como publicar
 
-Basta abrir `index.html` no browser. Para testar tudo como em produção
-(caminhos relativos, cache), sirva a pasta:
-
-```bash
-python -m http.server 8080
-# depois: http://localhost:8080
-```
+Copiar o conteúdo desta pasta para a raiz do alojamento. Não há passo de
+compilação, dependências nem configuração de servidor.
 
 ## O que foi mantido do site original
 
