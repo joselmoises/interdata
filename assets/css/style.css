@@ -100,6 +100,13 @@ strong{color:var(--ink);font-weight:700}
 .section--dark{background:var(--navy);color:#fff}
 .section--dark h2,.section--dark h3,.section--dark h4{color:#fff}
 .section--dark p{color:#B9BCD4}
+/* Cartões de fundo claro dentro de secções escuras mantêm o seu próprio texto,
+   senão herdariam branco sobre branco. */
+.section--dark .card h3,.section--dark .card h4,
+.section--dark .feature h3,.section--dark .feature h4,
+.section--dark .quote h3,.section--dark .step h4{color:var(--ink)}
+.section--dark .card p,.section--dark .feature p,
+.section--dark .step p{color:var(--muted)}
 
 .section-head{max-width:720px;margin-bottom:clamp(36px,5vw,56px)}
 .section-head--center{margin-inline:auto;text-align:center}
@@ -365,6 +372,11 @@ strong{color:var(--ink);font-weight:700}
 }
 .card:hover .card__icon{background:var(--brand);color:#fff;transform:scale(1.06) rotate(-4deg)}
 .card__icon svg{width:26px;height:26px}
+.card__icon--num{
+  font-family:var(--font-mono);font-size:1.05rem;font-weight:500;
+  letter-spacing:.02em;
+}
+.card:hover .card__icon--num{transform:scale(1.06)}
 .card h3{margin-bottom:.6rem}
 .card p{font-size:.93rem;flex:1}
 .card .link-arrow{margin-top:1.15rem}
@@ -377,11 +389,12 @@ strong{color:var(--ink);font-weight:700}
 }
 .feature:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
 .feature__num{
-  position:absolute;top:6px;right:18px;
-  font-size:4.5rem;font-weight:800;line-height:1;
+  position:absolute;top:8px;right:16px;
+  font-size:3.4rem;font-weight:800;line-height:1;
   color:rgba(2,131,170,.09);letter-spacing:-.04em;
+  pointer-events:none;
 }
-.feature h3{margin-bottom:.6rem;position:relative}
+.feature h3{margin-bottom:.6rem;position:relative;padding-right:2.25rem}
 .feature p{font-size:.93rem;margin-bottom:1.15rem}
 
 /* ---------- 12. Estatísticas ---------- */
@@ -591,7 +604,79 @@ strong{color:var(--ink);font-weight:700}
 .breadcrumb a:hover{color:var(--brand-bright)}
 .breadcrumb span{opacity:.5}
 
-/* ---------- 22. Animação de entrada ---------- */
+/* ---------- 22. Página de serviço individual ---------- */
+.svc-grid{display:grid;grid-template-columns:1fr 340px;gap:clamp(32px,4vw,56px);align-items:start}
+.svc-body > p + p{margin-top:1rem}
+.svc-body .lead{margin-bottom:1rem}
+
+.svc-aside{position:sticky;top:calc(var(--header-h) + 24px);display:grid;gap:20px}
+.svc-panel{background:var(--mist);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+.svc-panel h3{font-size:1.05rem;margin-bottom:1rem}
+.svc-list{display:grid;gap:2px}
+.svc-list a{
+  display:flex;align-items:center;gap:.6rem;
+  padding:.6rem .7rem;border-radius:9px;
+  font-size:.9rem;font-weight:600;color:var(--ink);
+  transition:var(--t);
+}
+.svc-list a:hover{background:#fff;color:var(--brand);box-shadow:var(--shadow-sm)}
+.svc-list a[aria-current="page"]{background:var(--brand);color:#fff}
+.svc-list svg{width:16px;height:16px;flex:none;opacity:.75}
+
+.svc-help{background:var(--navy);color:#fff;border-radius:var(--radius);padding:24px}
+.svc-help h3{color:#fff;font-size:1.05rem;margin-bottom:.5rem}
+.svc-help p{color:#B9BCD4;font-size:.9rem;margin-bottom:1.25rem}
+.svc-help .btn{width:100%}
+.svc-help .btn + .btn{margin-top:.6rem}
+
+/* Texto justificado — só em colunas largas de prosa.
+   Nunca em cartões: em colunas estreitas a justificação abre "rios" de espaço. */
+.svc-body p,
+.faq__body,
+.prose p,
+.prose li,
+.about-grid > div > p{
+  text-align:justify;
+  text-justify:inter-word;
+  hyphens:auto;
+  -webkit-hyphens:auto;
+}
+@media (max-width:640px){
+  /* Em ecrãs estreitos a justificação volta a criar rios — desliga-se. */
+  .svc-body p,.faq__body,.prose p,.prose li,.about-grid > div > p{text-align:left}
+}
+
+/* Bloco de prosa longa (conteúdo editorial / SEO) */
+.prose{max-width:78ch;margin-inline:auto}
+.prose h2{margin-bottom:1rem}
+.prose h3{margin:2.25rem 0 .75rem;font-size:1.2rem}
+.prose p{margin-bottom:1rem;font-size:1rem;line-height:1.75}
+.prose p:last-child{margin-bottom:0}
+.prose a{color:var(--brand);font-weight:600;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
+.prose a:hover{color:var(--brand-dark)}
+.prose ul{margin:0 0 1rem;display:grid;gap:.5rem}
+.prose ul li{position:relative;padding-left:1.4rem;color:var(--muted);line-height:1.7}
+.prose ul li::before{
+  content:'';position:absolute;left:.35rem;top:.7rem;
+  width:6px;height:6px;border-radius:50%;background:var(--brand);
+}
+.prose > p:first-of-type{font-size:1.08rem;color:var(--ink)}
+
+/* Faixa de cobertura nacional */
+.provinces{
+  border:1px solid var(--line);border-radius:var(--radius);
+  background:#fff;padding:26px 28px;
+}
+.provinces h3{font-size:1.1rem;margin-bottom:.4rem}
+.provinces p{font-size:.92rem;margin-bottom:1.15rem}
+.provinces ul{display:flex;flex-wrap:wrap;gap:.5rem}
+.provinces li{
+  padding:.35rem .8rem;border-radius:999px;
+  background:var(--brand-soft);color:var(--brand-dark);
+  font-size:.82rem;font-weight:600;
+}
+
+/* ---------- 23. Animação de entrada ---------- */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
 .reveal.is-in{opacity:1;transform:none}
 
@@ -600,11 +685,12 @@ strong{color:var(--ink);font-weight:700}
   .reveal{opacity:1;transform:none}
 }
 
-/* ---------- 23. Responsivo ---------- */
+/* ---------- 24. Responsivo ---------- */
 @media (max-width:1024px){
   .nav,.header-cta{display:none}
   .burger{display:flex}
-  .hero-grid,.about-grid{grid-template-columns:1fr}
+  .hero-grid,.about-grid,.svc-grid{grid-template-columns:1fr}
+  .svc-aside{position:static}
   .grid-4,.stats,.steps{grid-template-columns:repeat(2,1fr)}
   .footer-grid{grid-template-columns:1fr 1fr}
 }
@@ -626,7 +712,7 @@ strong{color:var(--ink);font-weight:700}
   .footer-bottom{flex-direction:column;align-items:flex-start}
 }
 
-/* ---------- 24. Impressão ---------- */
+/* ---------- 25. Impressão ---------- */
 @media print{
   .topbar,.header,.fab-whatsapp,.to-top,.mobile-nav,.overlay{display:none!important}
   body{color:#000}

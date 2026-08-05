@@ -11,12 +11,31 @@ tipografia com eyebrows monoespaçados, cartões com borda suave, blocos de esta
 interdata-html/
 ├── index.html         Página inicial
 ├── sobre.html         Sobre Nós (missão/visão/valores, números)
-├── servicos.html      Todos os serviços + marketing digital
+├── servicos.html      Hub: liga às 13 páginas + guia editorial de ~1100 palavras
 ├── contacto.html      Contactos + formulário de cotação + FAQ
+├── servicos/          Uma página dedicada por serviço (13)
+│   ├── cabeamento-estruturado.html
+│   ├── cameras-cctv.html
+│   ├── alarmes-seguranca.html
+│   ├── controle-acesso.html
+│   ├── fibra-optica.html
+│   ├── telecomunicacoes.html
+│   ├── iptv.html
+│   ├── voz-pbx-voip.html
+│   ├── assistencia-tecnica.html
+│   ├── criacao-websites.html
+│   ├── redes-sociais.html
+│   ├── marketing-seo.html
+│   └── desenvolvimento-software.html
 └── assets/
-    ├── css/style.css  Folha única, comentada por secções (1–24)
+    ├── css/style.css  Folha única, comentada por secções (1–25)
     └── js/main.js     Vanilla JS, sem bibliotecas
 ```
+
+Cada página de serviço tem: hero com breadcrumb, visão geral com benefícios,
+seis itens do que está incluído, razões para escolher a Interdata, cobertura
+por província, seis perguntas frequentes e CTA. A barra lateral liga aos
+restantes serviços do mesmo grupo (bom para navegação e para SEO interno).
 
 ## Como abrir
 
@@ -58,10 +77,19 @@ python -m http.server 8080
 - Cartão de "áreas de actuação" no hero, em vez de imagem de stock genérica.
 
 **SEO e partilha**
-- `<title>` e `meta description` próprios por página.
+- `<title>` e `meta description` próprios por página (17 páginas).
 - Open Graph + Twitter Card.
-- JSON-LD `ProfessionalService` na home (nome, contactos, cidades, horário).
+- JSON-LD `ProfessionalService` na home; `Service` + `FAQPage` em cada uma das
+  13 páginas de serviço — as perguntas frequentes podem aparecer directamente
+  nos resultados do Google.
+- Guia editorial de ~1100 palavras em `servicos.html`, com 13 links internos.
 - `lang="pt-MZ"`, `canonical`, headings hierárquicos.
+
+**Tipografia**
+- Texto justificado com hifenização automática nas colunas largas de prosa
+  (visão geral dos serviços, respostas do FAQ, guia editorial). Em cartões e
+  em ecrãs até 640 px volta a alinhamento à esquerda, porque em colunas
+  estreitas a justificação abre "rios" de espaço em branco.
 
 **Acessibilidade**
 - Link "saltar para o conteúdo", `aria-label` em todos os ícones-link.
