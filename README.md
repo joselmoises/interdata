@@ -7,35 +7,60 @@ tipografia com eyebrows monoespaçados, cartões com borda suave, blocos de esta
 
 ## Estrutura
 
+Site bilingue: **34 páginas** (17 em português, 17 em inglês).
+
 ```
 interdata-html/
-├── index.html         Página inicial
-├── sobre.html         Sobre Nós (missão/visão/valores, números)
-├── servicos.html      Hub: liga às 13 páginas + guia editorial de ~1100 palavras
-├── contacto.html      Contactos + formulário de cotação + FAQ
-├── servicos/          Uma página dedicada por serviço (13)
-│   ├── cabeamento-estruturado.html
-│   ├── cameras-cctv.html
-│   ├── alarmes-seguranca.html
-│   ├── controle-acesso.html
-│   ├── fibra-optica.html
-│   ├── telecomunicacoes.html
-│   ├── iptv.html
-│   ├── voz-pbx-voip.html
-│   ├── assistencia-tecnica.html
-│   ├── criacao-websites.html
-│   ├── redes-sociais.html
-│   ├── marketing-seo.html
-│   └── desenvolvimento-software.html
+│                          ── PORTUGUÊS (raiz) ──
+├── index.html             Página inicial
+├── sobre.html             Sobre Nós (missão/visão/valores, números)
+├── servicos.html          Hub dos serviços + guia editorial de ~1100 palavras
+├── contacto.html          Contactos + formulário de cotação + FAQ
+├── servicos/              Uma página dedicada por serviço (13)
+│   ├── cabeamento-estruturado.html   ├── voz-pbx-voip.html
+│   ├── cameras-cctv.html             ├── assistencia-tecnica.html
+│   ├── alarmes-seguranca.html        ├── criacao-websites.html
+│   ├── controle-acesso.html          ├── redes-sociais.html
+│   ├── fibra-optica.html             ├── marketing-seo.html
+│   ├── telecomunicacoes.html         └── desenvolvimento-software.html
+│   └── iptv.html
+│                          ── INGLÊS ──
+├── en/
+│   ├── index.html         about.html · services.html · contact.html
+│   └── services/          13 páginas com slugs próprios em inglês
+│       structured-cabling · cctv-cameras · security-alarms · access-control
+│       fibre-optic · telecommunications · iptv · voice-pbx-voip
+│       technical-support · web-design · social-media · seo-marketing
+│       software-development
 └── assets/
-    ├── css/style.css  Folha única, comentada por secções (1–25)
-    └── js/main.js     Vanilla JS, sem bibliotecas
+    ├── css/style.css      Folha única, comentada por secções
+    ├── js/main.js         Vanilla JS, sem bibliotecas
+    └── img/
+        ├── logo.png          Logótipo oficial (fundos claros)
+        ├── logo-branco.png   Variante para o rodapé escuro
+        ├── icone.png         Símbolo 180×180 (apple-touch-icon, Open Graph)
+        └── favicon-32.png    Favicon
 ```
 
 Cada página de serviço tem: hero com breadcrumb, visão geral com benefícios,
 seis itens do que está incluído, razões para escolher a Interdata, cobertura
 por província, seis perguntas frequentes e CTA. A barra lateral liga aos
 restantes serviços do mesmo grupo (bom para navegação e para SEO interno).
+
+## Idiomas
+
+O selector **PT | EN** está no cabeçalho de todas as páginas e leva sempre à
+página equivalente — de `servicos/cameras-cctv.html` vai para
+`en/services/cctv-cameras.html`, não para a inicial. Cada página declara
+`hreflang` para `pt-MZ`, `en` e `x-default` (aponta para o português), e o
+`lang` do `<html>` muda com o idioma, o que faz a hifenização do texto
+justificado seguir as regras da língua certa.
+
+Os slugs em inglês são próprios em vez de traduzidos à letra, porque é o que
+as pessoas escrevem no Google: `structured-cabling`, não `cabeamento-estruturado`.
+
+Para acrescentar um terceiro idioma, o padrão é o mesmo: uma pasta com o código
+do idioma na raiz, e o selector passa a ter três entradas.
 
 ## Como abrir
 
@@ -77,13 +102,21 @@ python -m http.server 8080
 - Cartão de "áreas de actuação" no hero, em vez de imagem de stock genérica.
 
 **SEO e partilha**
-- `<title>` e `meta description` próprios por página (17 páginas).
-- Open Graph + Twitter Card.
-- JSON-LD `ProfessionalService` na home; `Service` + `FAQPage` em cada uma das
-  13 páginas de serviço — as perguntas frequentes podem aparecer directamente
-  nos resultados do Google.
-- Guia editorial de ~1100 palavras em `servicos.html`, com 13 links internos.
-- `lang="pt-MZ"`, `canonical`, headings hierárquicos.
+- `<title>` e `meta description` próprios em cada uma das 34 páginas.
+- Open Graph + Twitter Card, com o símbolo da marca como imagem.
+- JSON-LD `ProfessionalService` + `FAQPage` nas duas páginas iniciais;
+  `Service` + `FAQPage` em cada uma das 26 páginas de serviço — as perguntas
+  frequentes podem aparecer directamente nos resultados do Google.
+- Guia editorial de ~1100 palavras em `servicos.html` e em `en/services.html`,
+  cada um com 13 links internos.
+- `hreflang` (`pt-MZ`, `en`, `x-default`), `canonical`, headings hierárquicos.
+
+**Marca**
+- Logótipo oficial da Interdata em PNG, em vez da aproximação em SVG.
+- Variante para fundo escuro gerada a partir do oficial: o "inter" passa a
+  branco e o ciano a `#22C7E8`, para se ler no rodapé navy. O ciano da marca
+  (`#0283AA`) foi extraído do próprio ficheiro e é o `--brand` do CSS.
+- Favicon e apple-touch-icon recortados do símbolo do logótipo.
 
 **Tipografia**
 - Texto justificado com hifenização automática nas colunas largas de prosa
@@ -105,17 +138,27 @@ python -m http.server 8080
 ## Antes de publicar — checklist
 
 1. **Números das estatísticas.** Substituir os `data-count` (15, 150, 60) pelos
-   valores reais. Estão em `index.html` e `sobre.html`.
-2. **Logótipo.** O SVG inline é uma aproximação. Substituir pelo ficheiro oficial
-   (`logo-1.png` do site actual, ou de preferência um SVG).
-3. **Imagens.** As duas fotos apontam para o Unsplash. Trocar por fotos reais de
+   valores reais. Aparecem nas quatro páginas iniciais e "sobre", nos dois idiomas.
+2. **Imagens.** As duas fotos apontam para o Unsplash. Trocar por fotos reais de
    obras da Interdata e guardá-las em `assets/img/`.
-4. **Redes sociais.** Os links são `https://facebook.com` etc. — colocar os URLs reais.
-5. **Formulário.** É estático: ao submeter, abre o WhatsApp com a mensagem formatada.
-   Para receber por email, ligar a Formspree / Netlify Forms / script PHP próprio —
-   ver `main.js`, bloco "Formulário de contacto → WhatsApp".
-6. **Páginas legais.** "Política de Privacidade" e "Termos de Uso" apontam para `#`.
-7. **Favicon.** É um SVG inline em `data:`. Se quiser um `.ico`/`.png` próprio, trocar.
+3. **Redes sociais.** Os links são `https://facebook.com` etc. — colocar os URLs reais.
+4. **Formulário.** É estático: ao submeter, abre o WhatsApp com a mensagem formatada
+   no idioma da página (os rótulos vêm dos atributos `data-wa-*` do `<form>`, para
+   o `main.js` servir os dois idiomas). Para receber por email, ligar a Formspree /
+   Netlify Forms / script PHP próprio.
+5. **Páginas legais.** "Política de Privacidade" e "Termos de Uso" apontam para `#`.
+6. **Tradução.** O inglês foi escrito por nós, não traduzido automaticamente, mas
+   vale uma revisão de quem conhece o vocabulário técnico usado nos vossos concursos.
+7. **Logótipo em SVG.** O PNG oficial é usado a 34 px de altura e serve bem. Se
+   tiverem o vector original, um SVG fica mais nítido em ecrãs de alta densidade.
+
+## Se precisar de editar o conteúdo
+
+As 34 páginas partilham o mesmo cabeçalho, rodapé e estrutura. Alterar um menu
+ou um contacto significa alterá-lo em 34 ficheiros — foram gerados por script
+precisamente por isso. Se prevê edições frequentes, vale a pena manter esse
+gerador ou passar para um gerador estático (Eleventy, Hugo). Para mudanças
+pontuais de texto, editar o HTML directamente é perfeitamente razoável.
 
 ## Notas técnicas
 

@@ -119,31 +119,31 @@
     if (next) next.addEventListener('click', function () { track.scrollBy({ left:  step(), behavior: 'smooth' }); });
   }
 
-  /* ---------- Formulário de contacto → WhatsApp ---------- */
+  /* ---------- Formulário de contacto → WhatsApp ----------
+     Os rótulos vêm do HTML (data-wa-*), para o formulário funcionar
+     em qualquer idioma sem duplicar este ficheiro. */
   var form = document.getElementById('form-contacto');
   if (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var data = new FormData(form);
-      var linhas = [
-        'Novo pedido via site interdata.co.mz',
-        '',
-        'Nome: '     + (data.get('nome')     || '-'),
-        'Empresa: '  + (data.get('empresa')  || '-'),
-        'Email: '    + (data.get('email')    || '-'),
-        'Telefone: ' + (data.get('telefone') || '-'),
-        'Serviço: '  + (data.get('servico')  || '-'),
-        '',
-        'Mensagem:',
-        (data.get('mensagem') || '-')
-      ];
+
+      var data   = new FormData(form);
+      var campos = ['nome', 'empresa', 'email', 'telefone', 'servico'];
+      var labels = (form.dataset.waLabels || 'Nome,Empresa,Email,Telefone,Serviço').split(',');
+
+      var linhas = [form.dataset.waIntro || 'interdata.co.mz', ''];
+      campos.forEach(function (nome, i) {
+        linhas.push((labels[i] || nome) + ': ' + (data.get(nome) || '-'));
+      });
+      linhas.push('', (form.dataset.waMsg || 'Mensagem') + ':', data.get('mensagem') || '-');
+
       var url = 'https://wa.me/258866610649?text=' + encodeURIComponent(linhas.join('\n'));
       window.open(url, '_blank', 'noopener');
 
       var ok = form.querySelector('[data-form-status]');
       if (ok) {
         ok.hidden = false;
-        ok.textContent = 'Obrigado! Vamos abrir o WhatsApp com a sua mensagem pronta a enviar.';
+        ok.textContent = form.dataset.ok || '';
       }
       form.reset();
     });

@@ -188,10 +188,24 @@ strong{color:var(--ink);font-weight:700}
 .header.is-stuck{box-shadow:var(--shadow-md);border-bottom-color:var(--line)}
 .header .container{display:flex;align-items:center;gap:1.5rem;min-height:var(--header-h)}
 
-.logo{display:flex;align-items:center;gap:.6rem;flex:none;font-weight:800;font-size:1.5rem;letter-spacing:-.03em}
-.logo-mark{width:38px;height:38px;flex:none}
-.logo-text{color:var(--navy)}
-.logo-text em{font-style:normal;color:var(--brand)}
+.logo{display:flex;align-items:center;flex:none}
+.logo img{height:34px;width:auto;display:block}
+.footer .logo img{height:32px}
+@media (max-width:640px){.logo img{height:28px}}
+
+/* Selector de idioma */
+.lang{
+  display:flex;align-items:center;gap:.15rem;flex:none;
+  font-family:var(--font-mono);font-size:.72rem;font-weight:500;
+}
+.lang a{
+  padding:.32rem .5rem;border-radius:6px;
+  color:var(--muted);letter-spacing:.06em;transition:var(--t);
+}
+.lang a:hover{color:var(--brand);background:var(--mist)}
+.lang a[aria-current="true"]{background:var(--brand-soft);color:var(--brand-dark);font-weight:700}
+.lang i{color:var(--line);font-style:normal}
+.mobile-nav .lang{margin-top:1.25rem;justify-content:center}
 
 .nav{margin-left:auto;display:flex;align-items:center;gap:.25rem}
 .nav > li{position:relative}
